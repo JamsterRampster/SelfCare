@@ -1,0 +1,29 @@
+﻿@using SelfCare
+@namespace SelfCare.Pages
+@model IndexModel
+
+<table>
+    <thead>
+        <tr>
+            <th>Note Id</th>
+            <th>Patient Id</th>
+            <th>Title</th>
+            <th>Body</th>
+            <th>Date Updated</th>
+            <th>Date Created</th>
+        </tr>
+    </thead>
+    <tbody>
+         @foreach (var note in Model.Notes)
+        {
+            <tr>
+                <td>@note.NoteId</td>
+                <td>@note.PatientId</td>
+                <td>@note.Title</td>
+                <td>@note.Body</td>
+                <td>@note.DateUpdated</td>
+                <td>@note.DateCreated</td>
+            </tr>
+        }
+    </tbody>
+</table>
