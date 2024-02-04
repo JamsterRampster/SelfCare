@@ -1,0 +1,81 @@
+﻿@page
+@model SelfCare.Pages.LoginModel
+@{
+    <div1>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        
+        <form method="post" asp-page-handler="LoginInfo">
+            <p1>Username</p1><br/>
+            <input asp-for="Username" /><br />
+            <span asp-validation-for="Username"></span><br />
+            <p2>Password</p2><br />
+            <input asp-for="Password" /><br />
+            <span asp-validation-for="Password"></span><div id="Error">@ViewData["ErrorMessage"]</div>
+            <p3><br />
+            <Input type="submit" value ="Login">
+            </p3>
+        </form>
+        @section scripts {
+            <partial name="_ValidationScriptsPartial" />
+        }
+        <script>
+            // <form id="loginForm" >
+            //     <label>Username: </label>
+            //         < input type = "text" id = "name" name = "name" required >
+            //             <label>Password: </label>
+            //                 < input type = "text" id = "password" name = "password" required >
+            //                     <div id="Error" > </div>
+            //                         < button type = "button" onclick = "validateFormData()" > Login < /button>
+            //                             < /form>
+            //                                             function validateFormData() {
+            //                                                 var username = document.getElementById("name").value
+            //                                                 var password = document.getElementById("password").value
+            //                                                 var passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$";
+
+            //                                                 if (username != null && password != null)
+
+            // /*                                                 && (password.length() >= 8) && (passwordRegex.test(password))) */
+            //                                                 {
+
+            //                                                     postLoginInfo();
+
+            //                                                 } else if (username == null && password == null) {
+
+            //                                                     // document.getElementById("Error").textContent = "Username & Password must not be empty!";
+
+            //                                                 } else if ((password.length() >= 8) && (passwordRegex.test(password))) {
+
+            //                                                     // document.getElementById("Error").textContent = "Password must be longer than 8 Characters & Must contain atleast 1 Uppercase, 1 Lowercase and 1 number!";
+
+            //                                                 } else {
+
+            //                                                     // document.getElementById("Error").textContent = "Error";
+
+            // //                                                 }
+
+            //                                             }
+
+            //                                             function postLoginInfo() {
+            //                                                 // var loginData = $("#loginForm").serialize();
+
+            //                                                 $.ajax({
+            //                                                     url: '/Login?handler=LoginInfo',
+            //                                                     type: 'POST',
+            //                                                     data: "test",
+            //                                                     async: true,
+            //                                                     headers: {
+            //                                                         RequestVerificationToken:
+            //                                                             $('input:hidden[name="__RequestVerificationToken"]').val()
+            //                                                     },
+            //                                                     success: function (response) {
+            //                                                         $("#response").html(response);
+            //                                                     },
+            //                                                     error: function (error) {
+            //                                                         console.log("Error:", error);
+            //                                                     }
+            //                                                 });
+            //                                             }
+
+        </script>
+    </div1>
+}

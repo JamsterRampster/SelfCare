@@ -12,14 +12,12 @@ namespace SelfCare.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
         private readonly SelfCareContext _selfcareContext;
         public List<Note> Notes { get; set; }
+        public List<User> Users { get; set; }
 
-
-        public IndexModel(ILogger<IndexModel> logger, SelfCareContext selfcareContext)
+        public IndexModel(SelfCareContext selfcareContext)
         {
-            _logger = logger;
             _selfcareContext = selfcareContext;
 
         }
@@ -28,18 +26,18 @@ namespace SelfCare.Pages
         public IActionResult OnGetPartial()
         {
 
-            List<Note> Notes = _selfcareContext.Notes.ToList();
+            Notes = _selfcareContext.Notes.ToList();
             return new PartialViewResult
             {
                 ViewName = "_NoteTablePartial",
-                ViewData = new ViewDataDictionary(Notes)
-                //ViewData = new ViewDataDictionary<List<Note>>(ViewData, Notes)
+                ViewData = new ViewDataDictionary<List<Note>>(ViewData, Notes)
             };
+
         }
 
         public void OnGet()
         {
-            var zac = "fred";
+            
         }
     }
 }

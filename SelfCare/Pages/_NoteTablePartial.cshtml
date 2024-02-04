@@ -1,6 +1,6 @@
 ﻿@using SelfCare
 @namespace SelfCare.Pages
-@model IndexModel
+@model List<SelfCare.Models.Note>
 
 <table>
     <thead>
@@ -14,7 +14,7 @@
         </tr>
     </thead>
     <tbody>
-         @foreach (var note in Model.Notes)
+         @foreach (var note in Model)
         {
             <tr>
                 <td>@note.NoteId</td>

@@ -6,10 +6,12 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1>Hello and Welcome</h1><br />
+    <p2>Or if you want to create a patient:</p2><br /><br />
+    <a asp-page="/login">Login</a><br /><br />
+    <a asp-page="/practitioner/createpatient">Create Patient</a><br /><br />
+    <div><button type="button" onclick="loadTable()">Load Table</button></div>
 
-    <button type="button" onclick="loadTable()">Load Table</button>
 
     <div id="tableContainer"></div>
 
