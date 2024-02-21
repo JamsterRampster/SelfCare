@@ -8,9 +8,9 @@ namespace SelfCare.Pages.Practitioner
         public IActionResult OnGet()
         {
             int userType = HttpContext.Session.GetInt32(SessionVariables.SessionKeyUserType) ?? 0;
-            string loggedInStatus = HttpContext.Session.GetString(SessionVariables.SessionKeyUserType) ?? "";
+            string loggedInStatus = HttpContext.Session.GetString(SessionVariables.SessionKeyLoggedIn) ?? "";
 
-            if ((loggedInStatus !="true") || (userType != 1)) {
+            if ((loggedInStatus !="true") || (userType != (int)Infrastructure.Enums.UserType.Practitioner)) {
 
                 return RedirectToPage("/login");
             }

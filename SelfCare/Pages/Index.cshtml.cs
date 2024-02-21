@@ -37,7 +37,6 @@ namespace SelfCare.Pages
 
         public void OnGet()
         {
-            
         }
     }
 }

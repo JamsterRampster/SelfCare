@@ -1,0 +1,27 @@
+﻿@page
+@model SelfCare.Pages.Patient.EditNoteModel
+@{
+        <form method="post" asp-page-handler="CreateNote">
+
+        <p1>Note's Name</p1><br />
+        <input asp-for="noteName" /><br />
+        <span asp-validation-for="noteName"></span><br />
+        <textarea asp-for="description">
+            @
+            </textarea>
+        <br />
+        <button type="submit" asp-page-handler="CreateNote">Create</button>
+    </form>
+
+    @section scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+    @if (ViewData["Error"] != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewData["Error"]");
+            };
+        </script>
+    }
+}

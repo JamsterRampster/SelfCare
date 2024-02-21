@@ -21,6 +21,8 @@ public partial class Practitioner
 
     public DateTime DateCreated { get; set; }
 
+    public virtual ICollection<Patient> Patients { get; set; } = new List<Patient>();
+
     public virtual ProductKey Product { get; set; }
 
     public virtual User User { get; set; }

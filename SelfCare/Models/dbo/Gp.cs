@@ -25,5 +25,9 @@ public partial class Gp
 
     public string Country { get; set; }
 
+    public DateTime DateUpdated { get; set; }
+
+    public DateTime DateCreated { get; set; }
+
     public virtual ICollection<Patient> Patients { get; set; } = new List<Patient>();
 }

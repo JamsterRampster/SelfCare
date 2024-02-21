@@ -9,13 +9,15 @@ public partial class Patient
 {
     public int PatientId { get; set; }
 
+    public int PractitionerId { get; set; }
+
     public int? UserId { get; set; }
 
     public string FirstName { get; set; }
 
     public string LastName { get; set; }
 
-    public string PractitionerKey { get; set; }
+    public Guid PractitionerKey { get; set; }
 
     public DateOnly DateOfBirth { get; set; }
 
@@ -33,11 +35,11 @@ public partial class Patient
 
     public string Country { get; set; }
 
-    public DateOnly ReferalDate { get; set; }
+    public DateOnly? ReferalDate { get; set; }
 
     public string Nhsid { get; set; }
 
-    public int Gpid { get; set; }
+    public int? Gpid { get; set; }
 
     public DateTime DateUpdated { get; set; }
 
@@ -47,5 +49,5 @@ public partial class Patient
 
     public virtual ICollection<Note> Notes { get; set; } = new List<Note>();
 
-    public virtual User User { get; set; }
+    public virtual Practitioner Practitioner { get; set; }
 }

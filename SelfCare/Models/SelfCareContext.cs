@@ -41,8 +41,7 @@ public partial class SelfCareContext : DbContext
             entity.Property(e => e.Address2)
                 .IsRequired()
                 .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasDefaultValue("");
+                .IsUnicode(false);
             entity.Property(e => e.Address3)
                 .IsRequired()
                 .HasMaxLength(50)
@@ -56,6 +55,8 @@ public partial class SelfCareContext : DbContext
                 .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.DateCreated).HasDefaultValueSql("(sysdatetime())");
+            entity.Property(e => e.DateUpdated).HasDefaultValueSql("(sysdatetime())");
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(50)
@@ -121,9 +122,7 @@ public partial class SelfCareContext : DbContext
                 .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.Gpid)
-                .HasDefaultValueSql("('')")
-                .HasColumnName("GPId");
+            entity.Property(e => e.Gpid).HasColumnName("GPId");
             entity.Property(e => e.LastName)
                 .IsRequired()
                 .HasMaxLength(50)
@@ -138,10 +137,6 @@ public partial class SelfCareContext : DbContext
                 .IsRequired()
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.PractitionerKey)
-                .IsRequired()
-                .HasMaxLength(8);
-            entity.Property(e => e.ReferalDate).HasDefaultValueSql("('')");
             entity.Property(e => e.Town)
                 .IsRequired()
                 .HasMaxLength(50)
@@ -149,12 +144,12 @@ public partial class SelfCareContext : DbContext
 
             entity.HasOne(d => d.Gp).WithMany(p => p.Patients)
                 .HasForeignKey(d => d.Gpid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Patient_GP");
 
-            entity.HasOne(d => d.User).WithMany(p => p.Patients)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK_Patient_User");
+            entity.HasOne(d => d.Practitioner).WithMany(p => p.Patients)
+                .HasForeignKey(d => d.PractitionerId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Patient_Practitioner");
         });
 
         modelBuilder.Entity<Practitioner>(entity =>
@@ -189,8 +184,11 @@ public partial class SelfCareContext : DbContext
 
             entity.ToTable("ProductKey");
 
-            entity.Property(e => e.Description).HasMaxLength(50);
+            entity.Property(e => e.Description)
+                .IsRequired()
+                .HasMaxLength(50);
             entity.Property(e => e.KeyId)
+                .IsRequired()
                 .HasMaxLength(8)
                 .IsUnicode(false);
         });

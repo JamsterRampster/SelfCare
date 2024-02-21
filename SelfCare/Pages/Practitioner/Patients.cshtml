@@ -1,0 +1,39 @@
+﻿@page
+@model SelfCare.Pages.Practitioner.PatientsModel
+
+@{
+    <div>
+        @foreach (var patient in Model.Patients)
+        {
+            <div2>
+                <h1>
+                    @patient.FirstName @patient.LastName @if (patient.Gp != null)
+                    {
+                        <span>GP's Name: @patient.Gp.Name
+                            GP's ID: @patient.Gpid
+                        </span>
+                    }
+                    - Created @patient.DateCreated
+                    <form method="post">
+                        <input type="hidden" name="patientid" value="@patient.PatientId" />
+                        <input type="hidden" name="patientname" value="@patient.FirstName @patient.LastName" />
+                        <button type="submit" asp-page-handler="DeletePatient">Delete</button>
+                    </form>
+                </h1>
+
+                <b1>
+                    Id: @patient.PatientId PostCode: @patient.PostCode Address: @patient.Address1 @patient.Address2 @patient.Address3 Town: @patient.Town County: @patient.County Country: @patient.Country
+                </b1>
+            </div2>
+        }
+    </div>
+    @if (ViewData["Message"] != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewData["Message"]");
+            };
+        </script>
+    }
+}
+

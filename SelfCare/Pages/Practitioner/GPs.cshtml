@@ -1,0 +1,32 @@
+﻿@page
+@model SelfCare.Pages.Practitioner.GPsModel
+
+@{
+    <div>
+        @foreach (var gp in Model.Gps)
+        {
+            <div2>
+                <h1>
+                    @gp.Name - Created @gp.DateCreated     
+                    <form method="post">
+                        <input type="hidden" name="Gpid" value="@gp.Gpid" />
+                        <input type="hidden" name="Gpname" value="@gp.Name" />
+                        <button type="submit" asp-page-handler="DeleteGp">Delete</button>
+                    </form>
+                </h1>
+
+                <b1>
+                    Id: @gp.Gpid PostCode: @gp.PostCode Address: @gp.Address1 @gp.Address2 @gp.Address3 Town: @gp.Town County: @gp.County Country: @gp.Country
+                </b1>
+            </div2>
+        }
+    </div>
+    @if (ViewData["Message"] != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewData["Message"]");
+            };
+        </script>
+    }
+}

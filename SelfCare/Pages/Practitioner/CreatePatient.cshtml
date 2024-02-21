@@ -28,15 +28,16 @@
         </div4>
 
         <div5>
-            <p4>Referal Date (Optional)</p4> <p5>NHSId (Optional)</p5> <p6>GP (Optional)</p6><br />
-            <input asp-for="ReferalDate" /> <input asp-for="NhsId" /> <input asp-for="GpId" /><br />
-            <span asp-validation-for="ReferalDate"></span><span asp-validation-for="NhsId"></span><span asp-validation-for="GpId"></span><br />
+            <p4>Referal Date (Optional)</p4> <p5>NHSId (Optional)</p5> <p6>GP Id(Optional)</p6><br />
+            <input asp-for="ReferalDate" /> <input asp-for="NhsId" /><input asp-for="GpId" /><br />
+            <span asp-validation-for="ReferalDate"></span><br />
         </div5>
 
         <div6>
             <br />
             <Input type="submit" value="Create Patient">
         </div6>
+        <div7>@ViewData["Response"]</div7>
     </form>
     @section scripts {
         <partial name="_ValidationScriptsPartial" />

@@ -51,15 +51,13 @@ namespace SelfCare.Pages
                     HttpContext.Session.SetString(SessionVariables.SessionKeyLoggedIn, "true");
                     HttpContext.Session.SetInt32(SessionVariables.SessionKeyUserType, user.UserTypeId);
 
-                    int fred = HttpContext.Session.GetInt32(SessionVariables.SessionKeyUserId) ?? 0;
-
-                    if (user.UserTypeId == 1) {
+                    if (user.UserTypeId == (int)Infrastructure.Enums.UserType.Patient) {
 
                         return RedirectToPage("/patient/index");
 
                     }
 
-                    if (user.UserTypeId == 2  )
+                    if (user.UserTypeId == (int)Infrastructure.Enums.UserType.Practitioner)
                     {
                         return RedirectToPage("/practitioner/index");
                     }
