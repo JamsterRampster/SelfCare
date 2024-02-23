@@ -2,13 +2,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SelfCare.Models;
 using System.Collections.Concurrent;
+using System.ComponentModel.DataAnnotations;
 
 namespace SelfCare.Pages.Patient
 {
     public class EditNoteModel : PageModel
     {
-        Models.Note note { get; set; }
+        public Models.Note editNote { get; set; }
 
+        [Required]
+        public string noteName { get; set; }
+
+        public string description { get; set; }
         private readonly SelfCareContext _selfcareContext;
         public EditNoteModel(SelfCareContext selfcareContext)
         {
@@ -26,16 +31,44 @@ namespace SelfCare.Pages.Patient
                 return RedirectToPage("/login");
             }
 
-            int latestItemId = HttpContext.Session.GetInt32(SessionVariables.SessionKeyLatestItemId) ?? 0;
-            int latestItemType = HttpContext.Session.GetInt32(SessionVariables.SessionKeyLatestItemType) ?? 0;
+            return RedirectToPage("/patient/Notes");
+        }
 
-            note = _selfcareContext.Notes.Where(u => u.NoteId == latestItemId).FirstOrDefault();
-
-            if ((latestItemType != (int)Infrastructure.Enums.ItemType.Note) || (latestItemId == 0) || (note == null))
+        public IActionResult OnPost(int? editNoteId) 
+        { 
+            if (editNoteId == null)
             {
-                return RedirectToPage();
+                return RedirectToPage("/patient/Notes");
+            }
+            
+            editNote = _selfcareContext.Notes.Where(x => x.NoteId == editNoteId).FirstOrDefault();
+
+            if (editNote == null)
+            {
+                return RedirectToPage("/patient/Notes");
             }
 
+            return Page();
+        }
+        public IActionResult OnPostEditNote()
+        {
+            if (ModelState.IsValid)
+            {
+                int userId = HttpContext.Session.GetInt32(SessionVariables.SessionKeyUserId) ?? 0;
+                if (userId != 0)
+                {
+                    Models.Patient patient = _selfcareContext.Patients.Where(p => p.UserId == userId).FirstOrDefault();
+                    if (patient != null)
+                    {
+                        editNote.Title = noteName;
+                        editNote.Body = description;
+                        _selfcareContext.SaveChanges();
+                        return RedirectToPage("/patient/Notes");
+                    }
+                }
+            }
+
+            ViewData["Error"] = "An error has occured if this persists please contact support.";
             return Page();
         }
     }

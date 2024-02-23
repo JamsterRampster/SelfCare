@@ -43,14 +43,5 @@ namespace SelfCare.Pages.Patient
             Notes = _selfcareContext.Notes.Where(u => u.PatientId == patient.PatientId).ToList();
         }
 
-        private IActionResult OnPostViewNote()
-        {
-            if ((ModelState.IsValid) && (editNoteId != null))
-            {
-                HttpContext.Session.SetInt32(SessionVariables.SessionKeyLatestItemId, editNoteId);
-                HttpContext.Session.SetInt32(SessionVariables.SessionKeyLatestItemType, (int)Infrastructure.Enums.ItemType.Note);
-            }
-            return Page();
-        }
     }
 }

@@ -1,16 +1,11 @@
 ﻿@page
 @model SelfCare.Pages.Patient.EditNoteModel
 @{
-        <form method="post" asp-page-handler="CreateNote">
-
-        <p1>Note's Name</p1><br />
-        <input asp-for="noteName" /><br />
-        <span asp-validation-for="noteName"></span><br />
-        <textarea asp-for="description">
-            @
-            </textarea>
-        <br />
-        <button type="submit" asp-page-handler="CreateNote">Create</button>
+    <form method="post" asp-page-handler="CreateNote">
+        <textarea asp-for="editNote.Title"> @Model.editNote.Title Test </textarea><br />
+        <span asp-validation-for="editNote.Title"></span><br />
+        <textarea asp-for="editNote.Body"> @Model.editNote.Body Test </textarea><br />
+        <button type="submit" asp-page-handler="EditNote">Edit Note</button>
     </form>
 
     @section scripts {

@@ -17,10 +17,10 @@
                     {
                         @note.Body
                     }
-                    <form method="post" asp-page-handler="ViewNote">
+                    <form method="post" asp-page="/Patient/EditNote" asp-route-editNoteId="@note.NoteId">
                         <input type="hidden" name="editNoteId" value="@note.NoteId" />
                         Click to view and Edit!
-                        <button type="submit" asp-page-handler="ViewNote">Click to view and edit!</button>
+                        <button type="submit">Click to view and edit!</button>
                     </form>
                 </p>
             </div>
