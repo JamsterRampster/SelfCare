@@ -6,8 +6,7 @@
         <p1>Note's Name</p1><br />
         <input asp-for="noteName" /><br />
         <span asp-validation-for="noteName"></span><br />
-        <textarea asp-for="description">
-        Description...
+        <textarea asp-for="description" placeholder="Description...">
         </textarea>    
         <br />
         <button type="submit" asp-page-handler="CreateNote">Create</button>

@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SelfCare.Pages.Patient
 {
+    [BindProperties]
     public class EditNoteModel : PageModel
     {
         public Models.Note editNote { get; set; }
@@ -13,7 +14,9 @@ namespace SelfCare.Pages.Patient
         [Required]
         public string noteName { get; set; }
 
-        public string description { get; set; }
+        public string noteBody { get; set; }
+        public int noteId { get; set; }
+
         private readonly SelfCareContext _selfcareContext;
         public EditNoteModel(SelfCareContext selfcareContext)
         {
@@ -48,6 +51,8 @@ namespace SelfCare.Pages.Patient
                 return RedirectToPage("/patient/Notes");
             }
 
+            noteName = editNote.Title;
+            noteBody = editNote.Body;
             return Page();
         }
         public IActionResult OnPostEditNote()
@@ -55,15 +60,24 @@ namespace SelfCare.Pages.Patient
             if (ModelState.IsValid)
             {
                 int userId = HttpContext.Session.GetInt32(SessionVariables.SessionKeyUserId) ?? 0;
+
                 if (userId != 0)
                 {
                     Models.Patient patient = _selfcareContext.Patients.Where(p => p.UserId == userId).FirstOrDefault();
+
                     if (patient != null)
                     {
-                        editNote.Title = noteName;
-                        editNote.Body = description;
-                        _selfcareContext.SaveChanges();
-                        return RedirectToPage("/patient/Notes");
+                        var noteToUpdate = _selfcareContext.Notes.Where(x => x.NoteId == noteId).FirstOrDefault();
+
+                        if (noteToUpdate != null)
+                        {
+                            noteToUpdate.Title = noteName;
+                            noteToUpdate.Body = noteBody;
+                            noteToUpdate.DateUpdated = DateTime.Now;
+                            _selfcareContext.SaveChanges();
+                            ViewData["SaveResponse"] = "Saved";
+                            return Page();
+                        }
                     }
                 }
             }
