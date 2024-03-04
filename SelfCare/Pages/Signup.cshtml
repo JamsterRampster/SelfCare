@@ -1,77 +1,78 @@
 ﻿@page
 @model SelfCare.Pages.SignupModel
 @{
-    <div>
-        <form method="post" asp-page-handler="Signup">
-            <div>
-                <p1>Email</p1> <p2>Username</p2><br />
-                <input asp-for="Email" /> <input asp-for="Username" /><br />
-                <span asp-validation-for="Email"></span><span asp-validation-for="Username"></span><br />
-            </div>
+        <div>
+            <form method="post" asp-page-handler="Signup">
+                <div>
+                    <p1>Email</p1> <p2>Username</p2><br />
+                    <input asp-for="Email" /> <input asp-for="Username" /><br />
+                    <span asp-validation-for="Email"></span><span asp-validation-for="Username"></span><br />
+                </div>
 
-            <div>
-                <p4>Password</p4> <p5>Confirm Password</p5><br />
-                <input asp-for="Password" /> <input asp-for="ConfirmPassword" /><br />
-                <span asp-validation-for="Password"></span><span asp-validation-for="ConfirmPassword"></span><br />
-            </div>
+                <div>
+                    <p4>Password</p4> <p5>Confirm Password</p5><br />
+                    <input asp-for="Password" /> <input asp-for="ConfirmPassword" /><br />
+                    <span asp-validation-for="Password"></span><span asp-validation-for="ConfirmPassword"></span><br />
+                </div>
 
-            <div>
-                <p4>First Name</p4> <p5>Last Name</p5><br />
-                <input asp-for="FirstName" /> <input asp-for="LastName" /><br />
-                <span asp-validation-for="FirstName"></span><span asp-validation-for="LastName"></span><br />
-            </div>
+                <div>
+                    <p4>First Name</p4> <p5>Last Name</p5><br />
+                    <input asp-for="FirstName" /> <input asp-for="LastName" /><br />
+                    <span asp-validation-for="FirstName"></span><span asp-validation-for="LastName"></span><br />
+                </div>
 
-            <div class="radio_container">
-                <input type="radio" id="patient" name="role" onclick="showPatientSection()" />
-                <label for="patient">Patient</label>
+                <div class="radio_container">
+                    <input type="radio" id="patient" name="role" onclick="showPatientSection()" />
+                    <label for="patient">Patient</label>
 
-                <input type="radio" id="practitioner" name="role" onclick="showPractitionerSection()" />
-                <label for="practitioner">Practitioner</label>
-            </div>
+                    <input type="radio" id="practitioner" name="role" onclick="showPractitionerSection()" />
+                    <label for="practitioner">Practitioner</label>
+                </div>
 
-            <div id="patientSection" style="display:none;">
-                <p>Practitioner Code</p>
-                <input asp-for="PractitionerCode" /><br />
-                <span asp-validation-for="PractitionerCode"></span><br />
+                <div id="patientSection" style="display:none;">
+                    <p>Practitioner Code</p>
+                    <input asp-for="PractitionerCode" /><br />
+                    <span asp-validation-for="PractitionerCode"></span><br />
 
-                <p>Date Of Birth</p>
-                <input asp-for="DateOfBirth" /><br />
-                <span asp-validation-for="DateOfBirth"></span><br />
+                    <p>Date Of Birth</p>
+                    <input asp-for="DateOfBirth" /><br />
+                    <span asp-validation-for="DateOfBirth"></span><br />
 
-                <p>Postcode</p>
-                <input asp-for="Postcode" /><br />
-                <span asp-validation-for="Postcode"></span><br />
-            </div>
+                    <p>Postcode</p>
+                    <input asp-for="Postcode" /><br />
+                    <span asp-validation-for="Postcode"></span><br />
+                </div>
 
-            <div id="practitionerSection" style="display:none;">
-                <p>Product Code</p>
-                <input asp-for="ProductCode" /><br />
-                <span asp-validation-for="ProductCode"></span><br />
-            </div>
+                <div id="practitionerSection" style="display:none;">
+                    <p>Product Code</p>
+                    <input asp-for="ProductCode" /><br />
+                    <span asp-validation-for="ProductCode"></span><br />
+                </div>
 
-            <div>
-                <br />
-                <Input type="submit" value="Create GP">
-            </div>
-            <div7>@ViewData["Response"]</div7>
-        </form>
-    </div>
+                <div>
+                    <br />
+                    <input id="radialValue" name="radialValue" type="hidden" value="" />
+                    <Input type="submit" value="Create GP">
+                </div>
+                <div7>@ViewData["Response"]</div7>
+            </form>
+        </div>
     @section scripts {
-        <partial name="_ValidationScriptsPartial" />
-        <script>
-            function showPatientSection() {
-                document.getElementById("patientSection").style.display = "block";
-                document.getElementById("practitionerSection").style.display = "none";
-                document.getElementById("PractitionerCode").value = "";
-                document.getElementById("DateOfBirth").value = "";
-                document.getElementById("Postcode").value = "";
-            }
+            <partial name="_ValidationScriptsPartial" />
+            <script>
+                function showPatientSection() {
+                    document.getElementById("patientSection").style.display = "block";
+                    document.getElementById("practitionerSection").style.display = "none";
 
-            function showPractitionerSection() {
-                document.getElementById("practitionerSection").style.display = "block";
-                document.getElementById("patientSection").style.display = "none";
-                document.getElementById("ProductCode").value = "";
-            }
-        </script>
+                    document.getElementsByName("radialValue")[0].value = "patient";
+                }
+
+                function showPractitionerSection() {
+                    document.getElementById("practitionerSection").style.display = "block";
+                    document.getElementById("patientSection").style.display = "none";
+
+                    document.getElementsByName("radialValue")[0].value = "practitioner";
+                }
+            </script>
     }
 }

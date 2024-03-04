@@ -17,18 +17,14 @@ namespace SelfCare.Pages
         [Required]
         public string Password { get; set; }
         [Required]
-        public string? ConfirmPassword { get; set; }
+        public string ConfirmPassword { get; set; }
         [Required]
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
-        [Required]
         public string PractitionerCode { get; set; }
-        [Required]
         public string DateOfBirth { get; set; }
-        [Required]
         public string Postcode { get; set; }
-        [Required]
         public string ProductCode { get; set; }
 
 
@@ -43,8 +39,26 @@ namespace SelfCare.Pages
 
         }
 
-        public IActionResult OnPostSignup() 
+        public IActionResult OnPostSignup([FromForm] string radialValue) 
         {
+            if (radialValue == "practitioner") 
+            {
+                if (ProductCode == null)
+                {
+                    ViewData["Response"] = "Product Code is required.";
+                    return Page();
+                }
+            }
+
+            if (radialValue == "patient") 
+            {
+                if (DateOfBirth == null || PractitionerCode == null || Postcode == null) 
+                {
+                    ViewData["Response"] = "All patient fields are required.";
+                    return Page();
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 if (ProductCode != String.Empty && PractitionerCode == null && DateOfBirth == null && Postcode == null) //If the practitioner is selected
@@ -77,9 +91,30 @@ namespace SelfCare.Pages
                         {
                             Models.User newUser = new Models.User();
 
+                            newUser.Username = Username;
+                            newUser.Password = Password;
+                            newUser.Email = Email;
+                            newUser.UserTypeId = (int)Infrastructure.Enums.UserType.Practitioner;
+                            newUser.DateUpdated = DateTime.Now;
+                            newUser.DateCreated = DateTime.Now;
+
+                            try
+                            {
+                                _selfcareContext.Users.Add(newUser);
+                                _selfcareContext.SaveChanges();
+                            }
+                            catch (Exception ex)
+                            {
+                                Console.WriteLine(ex.ToString());
+                                ViewData["Message"] = "An error has occured";
+                                return Page();
+                            }
+
+                            finishedPractitioner.UserId = newUser.UserId;
+                            finishedPractitioner.DateUpdated = DateTime.Now;
                         }
                     }
-                    //Show success and Practitioner Key
+
                     ViewData["Response"] = $"";
                 }
                 return Page();
