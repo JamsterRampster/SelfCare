@@ -21,6 +21,8 @@ public partial class User
 
     public DateTime DateCreated { get; set; }
 
+    public virtual ICollection<Patient> Patients { get; set; } = new List<Patient>();
+
     public virtual ICollection<Practitioner> Practitioners { get; set; } = new List<Practitioner>();
 
     public virtual UserType UserType { get; set; }

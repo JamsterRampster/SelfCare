@@ -47,7 +47,18 @@ namespace SelfCare.Pages.Practitioner
         {
             if (ModelState.IsValid)
             {
+                if ((GpId != null) && (!(_selfcareContext.Gps.Any(u => u.Gpid == GpId))))
+                {
+                    ViewData["Response"] = "Incorrect GP Id or GP Doesnt Exist";
+                    return Page();
+                }
+
                 Models.Patient newPatient = new Models.Patient();
+
+                int userId = HttpContext.Session.GetInt32(SessionVariables.SessionKeyUserId) ?? 0;
+
+                Models.Practitioner practitioner = _selfcareContext.Practitioners.Where(u => u.UserId == userId).FirstOrDefault();
+
                 newPatient.FirstName = FirstName;
                 newPatient.LastName = LastName;
                 newPatient.DateOfBirth = DateOfBirth; 
@@ -61,17 +72,14 @@ namespace SelfCare.Pages.Practitioner
                 newPatient.ReferalDate = ReferalDate;
                 newPatient.Nhsid = NhsId;
                 newPatient.Gpid = GpId;
-
+                newPatient.PractitionerId = practitioner.PractitionerId;
                 newPatient.PractitionerKey = Guid.NewGuid();
-                if (( GpId != null ) && (!(_selfcareContext.Gps.Any(u => u.Gpid == GpId)))) {
-                    ViewData["Response"] = "Incorrect GP Id or GP Doesnt Exist";
-                    return Page();
-                }
+
                 _selfcareContext.Patients.Add(newPatient);
                 _selfcareContext.SaveChanges();
 
                 //Show success and Practitioner Key
-                ViewData["Response"] = $"You Practitioner KEy is :- {newPatient.PractitionerKey}";
+                ViewData["Response"] = $"You Practitioner Key is :- {newPatient.PractitionerKey}";
 
 
                 //Clear Form
@@ -88,8 +96,11 @@ namespace SelfCare.Pages.Practitioner
         {
             int userType = HttpContext.Session.GetInt32(SessionVariables.SessionKeyUserType) ?? 0;
             string loggedInStatus = HttpContext.Session.GetString(SessionVariables.SessionKeyLoggedIn) ?? "";
+            int userId = HttpContext.Session.GetInt32(SessionVariables.SessionKeyUserId) ?? 0;
 
-            if ((loggedInStatus != "true") || (userType != (int)Infrastructure.Enums.UserType.Practitioner))
+            Models.Practitioner practitioner = _selfcareContext.Practitioners.Where(u => u.UserId == userId).FirstOrDefault();
+
+            if ((loggedInStatus != "true") || (userType != (int)Infrastructure.Enums.UserType.Practitioner) || (practitioner == null))
             {
 
                 return RedirectToPage("/login");

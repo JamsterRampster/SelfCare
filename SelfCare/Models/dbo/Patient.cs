@@ -50,4 +50,6 @@ public partial class Patient
     public virtual ICollection<Note> Notes { get; set; } = new List<Note>();
 
     public virtual Practitioner Practitioner { get; set; }
+
+    public virtual User User { get; set; }
 }

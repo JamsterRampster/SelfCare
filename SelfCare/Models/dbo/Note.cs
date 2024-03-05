@@ -15,6 +15,8 @@ public partial class Note
 
     public string Body { get; set; }
 
+    public string Status { get; set; }
+
     public DateTime DateUpdated { get; set; }
 
     public DateTime DateCreated { get; set; }

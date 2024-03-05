@@ -80,6 +80,7 @@ public partial class SelfCareContext : DbContext
                 .HasDefaultValue("");
             entity.Property(e => e.DateCreated).HasDefaultValueSql("(sysdatetime())");
             entity.Property(e => e.DateUpdated).HasDefaultValueSql("(sysdatetime())");
+            entity.Property(e => e.Status).HasMaxLength(50);
             entity.Property(e => e.Title)
                 .IsRequired()
                 .HasMaxLength(300);
@@ -150,6 +151,10 @@ public partial class SelfCareContext : DbContext
                 .HasForeignKey(d => d.PractitionerId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Patient_Practitioner");
+
+            entity.HasOne(d => d.User).WithMany(p => p.Patients)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK_Patient_User");
         });
 
         modelBuilder.Entity<Practitioner>(entity =>
