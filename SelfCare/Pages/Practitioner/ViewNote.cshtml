@@ -1,0 +1,23 @@
+﻿@page
+@model SelfCare.Pages.Practitioner.ViewNoteModel
+@{
+    <p1>Note's Name</p1>
+    <br />
+    <textarea asp-for="noteName"></textarea>
+    <br />
+
+    <span asp-validation-for="noteName"></span>
+    <br />
+
+    <textarea asp-for="noteBody"></textarea>
+    @if (@Model.Viewnote.DateUpdated != Model.Viewnote.DateCreated)
+    {
+        <span>Last Editted:</span>
+
+        <span>@Model.Viewnote.DateUpdated</span>
+    }
+    else {
+        <span>Created:</span>
+        <span>@Model.Viewnote.DateCreated</span>
+    }
+}

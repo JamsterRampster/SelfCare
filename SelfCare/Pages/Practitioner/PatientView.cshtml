@@ -1,0 +1,37 @@
+﻿@page "/practitioner/patientview/{patientId}"
+@model SelfCare.Pages.Practitioner.PatientViewModel
+@{
+    <div>
+        @foreach (var note in Model.notes)
+        {
+            <div>
+                <h1>
+                    @note.Title - Created @note.DateCreated
+                </h1>
+                <p>
+                    @if (note.Body.Length >=25)
+                    {
+                        @note.Body.Substring(0, 25);
+                        <span>{Click to view more...}</span>
+                    }
+                    else
+                    {
+                        @note.Body
+                    }
+                    <form method="post" asp-page="/practitioner/viewnote">
+                        <input name="NoteId" type="hidden" value="@note.NoteId" />
+                        <button type="submit">Click to view</button>
+                    </form>
+                </p>
+            </div>
+        }
+    </div>
+    @if (ViewData["Message"] != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewData["Message"]");
+            };
+        </script>
+    }
+}

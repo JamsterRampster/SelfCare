@@ -1,3 +1,4 @@
+using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SelfCare.Models;
@@ -43,8 +44,15 @@ namespace SelfCare.Pages.Patient
             {
                 return RedirectToPage("/patient/Notes");
             }
-            
-            editNote = _selfcareContext.Notes.Where(x => x.NoteId == editNoteId).FirstOrDefault();
+
+            int userId = HttpContext.Session.GetInt32(SessionVariables.SessionKeyUserId) ?? 0;
+
+            if (userId != 0)
+            {
+                Models.Patient patient = _selfcareContext.Patients.Where(p => p.UserId == userId).FirstOrDefault();
+
+                editNote = _selfcareContext.Notes.Where(x => x.NoteId == editNoteId && x.PatientId == patient.PatientId).FirstOrDefault();
+            }
 
             if (editNote == null)
             {
