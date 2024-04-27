@@ -9,7 +9,7 @@ using System.Diagnostics.Metrics;
 
 namespace SelfCare.Pages.Practitioner
 {
-    [BindProperties]
+    [BindProperties] //The variables on the webpage bind them to the variables on the controller and their requirements
     public class AddGpModel : PageModel
     {
         private readonly SelfCareContext _selfcareContext;
@@ -20,6 +20,7 @@ namespace SelfCare.Pages.Practitioner
         public string Address1 { get; set; }
         [Required]
         public string Address2 { get; set; }
+        //Not required
         public string? Address3 { get; set; }
         [Required]
         public string Town { get; set; }
@@ -30,7 +31,7 @@ namespace SelfCare.Pages.Practitioner
         [Required]
         public string Country { get; set; }
 
-        public AddGpModel(SelfCareContext selfcareContext)
+        public AddGpModel(SelfCareContext selfcareContext) //Constructor
         {
             _selfcareContext = selfcareContext;
 
@@ -38,9 +39,9 @@ namespace SelfCare.Pages.Practitioner
 
         public IActionResult OnPostCreateGP()
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) //If the form sent in the post has the correct variable standards
             {
-                Models.Gp newGp = new Models.Gp();
+                Models.Gp newGp = new Models.Gp(); //Generate a new GP and populate its data
                 newGp.Name = Name;
                 newGp.Address1 = Address1;
                 newGp.Address2 = Address2;
@@ -52,15 +53,15 @@ namespace SelfCare.Pages.Practitioner
 
                 try
                 {
-                    _selfcareContext.Gps.Add(newGp);
-                    _selfcareContext.SaveChanges();
+                    _selfcareContext.Gps.Add(newGp); //Add the new GP object into the table stored in server memory
+                    _selfcareContext.SaveChanges(); //Save the data in the server memory to the SQL database
                 } catch (Exception ex)
                 {
-                    Console.WriteLine(ex.ToString());
+                    Console.WriteLine(ex.ToString()); //If an error occured write the error in the page's console
                     ViewData["Message"] = "An error has occured";
                     return Page();
                 }
-                //Show success and Practitioner Key
+                //Show success with GP name for clarification
                 ViewData["Response"] = $"Successfully added {newGp.Name} as a GP, Manage your GP's on the GP Page.";
             }
             return Page();

@@ -3,16 +3,16 @@
 @{
     <div1>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        
         <form method="post" asp-page-handler="LoginInfo">
-            <p1>Username</p1><br/>
+            <p1>Username</p1><br />
             <input asp-for="Username" /><br />
             <span asp-validation-for="Username"></span><br />
             <p2>Password</p2><br />
             <input asp-for="Password" /><br />
             <span asp-validation-for="Password"></span><div id="Error">@ViewData["ErrorMessage"]</div>
-            <p3><br />
-            <Input type="submit" value ="Login">
+            <p3>
+                <br />
+                <Input type="submit" value="Login">
             </p3>
         </form>
         @section scripts {

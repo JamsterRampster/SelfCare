@@ -2,42 +2,42 @@
 @model SelfCare.Pages.Practitioner.CreatePatientModel
 @{
     <form method="post" asp-page-handler="CreatePatient">
-        <div1>
-            <p1>First Name</p1> <p2>Last Name</p2> <p3>Date Of Birth</p3><br />
+        <div>
+            <p>First Name Last Name Date Of Birth</p><br />
             <input asp-for="FirstName" /> <input asp-for="LastName" /> <input asp-for="DateOfBirth" /><br />
             <span asp-validation-for="FirstName"></span><span asp-validation-for="LastName"></span><span asp-validation-for="DateOfBirth"></span><br />
-        </div1>
+        </div>
 
-        <div2>
-            <p4>Address1</p4> <p5>Address2</p5> <p6>Address3 (Optional)</p6><br />
+        <div>
+            <p>Address1 Address2 Address3 (Optional)</p><br />
             <input asp-for="Address1" /> <input asp-for="Address2" /> <input asp-for="Address3" /><br />
             <span asp-validation-for="Address1"></span><span asp-validation-for="Address2"></span><br />
-        </div2>
+        </div>
 
-        <div3>
-            <p4>Town</p4> <p5>County</p5> <p6>Postcode</p6><br />
+        <div>
+            <p>Town County Postcode</p><br />
             <input asp-for="Town" /> <input asp-for="County" /> <input asp-for="Postcode" /><br />
             <span asp-validation-for="Town"></span><span asp-validation-for="County"></span><span asp-validation-for="Postcode"></span><br />
-        </div3>
+        </div>
 
-        <div4>
-            <p4>Country</p4><br />
+        <div>
+            <p>Country</p><br />
             <input asp-for="Country" /><br />
             <span asp-validation-for="Country"></span><br />
 
-        </div4>
+        </div>
 
-        <div5>
-            <p4>Referal Date (Optional)</p4> <p5>NHSId (Optional)</p5> <p6>GP Id(Optional)</p6><br />
+        <div>
+            <p>Referal Date (Optional) NHSId (Optional) GP Id(Optional)</p><br />
             <input asp-for="ReferalDate" /> <input asp-for="NhsId" /><input asp-for="GpId" /><br />
             <span asp-validation-for="ReferalDate"></span><br />
-        </div5>
+        </div>
 
-        <div6>
+        <div>
             <br />
             <Input type="submit" value="Create Patient">
-        </div6>
-        <div7>@ViewData["Response"]</div7>
+        </div>
+        <div>@ViewData["Response"]</div>
     </form>
     @section scripts {
         <partial name="_ValidationScriptsPartial" />

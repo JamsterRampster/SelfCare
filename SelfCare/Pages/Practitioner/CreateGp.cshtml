@@ -2,29 +2,29 @@
 @model SelfCare.Pages.Practitioner.AddGpModel
 @{
     <form method="post" asp-page-handler="CreateGP">
-        <div1>
-            <p1>Name</p1> <p2>Country</p2><br />
+        <div>
+            <p>Name Country</p><br />
             <input asp-for="Name" /> <input asp-for="Country" /><br />
             <span asp-validation-for="Name"></span><span asp-validation-for="Country"></span><br />
-        </div1>
+        </div>
 
-        <div2>
-            <p4>Address1</p4> <p5>Address2</p5> <p6>Address3 (Optional)</p6><br />
+        <div>
+            <p>Address1 Address2 Address3 (Optional)</p><br />
             <input asp-for="Address1" /> <input asp-for="Address2" /> <input asp-for="Address3" /><br />
             <span asp-validation-for="Address1"></span><span asp-validation-for="Address2"></span><br />
-        </div2>
+        </div>
 
-        <div3>
-            <p4>Town</p4> <p5>County</p5> <p6>Postcode</p6><br />
+        <div>
+            <p>Town County Postcode</p><br />
             <input asp-for="Town" /> <input asp-for="County" /> <input asp-for="Postcode" /><br />
             <span asp-validation-for="Town"></span><span asp-validation-for="County"></span><span asp-validation-for="Postcode"></span><br />
-        </div3>
+        </div>
 
-        <div6>
+        <div>
             <br />
             <Input type="submit" value="Create GP">
-        </div6>
-        <div7>@ViewData["Response"]</div7>
+        </div>
+        <div>@ViewData["Response"]</div>
     </form>
     @section scripts {
         <partial name="_ValidationScriptsPartial" />

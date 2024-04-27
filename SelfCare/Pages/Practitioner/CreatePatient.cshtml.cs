@@ -22,7 +22,7 @@ namespace SelfCare.Pages.Practitioner
         public string Address1 { get; set; }
         [Required]
         public string Address2 { get; set; }
-        public string? Address3{ get; set; }
+        public string? Address3 { get; set; }
         [Required]
         public string Town { get; set; }
         [Required]
@@ -61,10 +61,10 @@ namespace SelfCare.Pages.Practitioner
 
                 newPatient.FirstName = FirstName;
                 newPatient.LastName = LastName;
-                newPatient.DateOfBirth = DateOfBirth; 
-                newPatient.Address1 = Address1; 
-                newPatient.Address2 = Address2; 
-                newPatient.Address3 = Address3; 
+                newPatient.DateOfBirth = DateOfBirth;
+                newPatient.Address1 = Address1;
+                newPatient.Address2 = Address2;
+                newPatient.Address3 = Address3;
                 newPatient.Town = Town;
                 newPatient.County = County;
                 newPatient.Country = Country;
@@ -81,13 +81,8 @@ namespace SelfCare.Pages.Practitioner
                 //Show success and Practitioner Key
                 ViewData["Response"] = $"You Practitioner Key is :- {newPatient.PractitionerKey}";
 
-
-                //Clear Form
-                WipeModel();
-
-
                 ModelState.Clear();
-                
+
 
             }
             return Page();
@@ -107,23 +102,6 @@ namespace SelfCare.Pages.Practitioner
             }
 
             return Page();
-        }
-
-    private void WipeModel()
-        {
-            FirstName = string.Empty; 
-            LastName = string.Empty; 
-            DateOfBirth = DateOnly.MinValue; 
-            Address1 = string.Empty; 
-            Address2 = string.Empty; 
-            Address3 = string.Empty; 
-            Town = string.Empty; 
-            County = string.Empty; 
-            Country = string.Empty; 
-            Postcode = string.Empty;
-            ReferalDate = null; 
-            NhsId = null; 
-            GpId = null;
         }
     }
 }

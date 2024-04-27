@@ -9,9 +9,9 @@ namespace SelfCare.Pages.Patient
     [BindProperties]
     public class NotesModel : PageModel
     {
-        public List<Models.Note> Notes { get; set; }
+        public List<Models.Note> Notes { get; set; } //List the notes are populated into
 
-        public int editNoteId;
+        public int editNoteId; //A variable linked to a hidden input on the screen
 
         private readonly SelfCareContext _selfcareContext;
         public NotesModel(SelfCareContext selfcareContext)
@@ -31,16 +31,16 @@ namespace SelfCare.Pages.Patient
                 return RedirectToPage("/login");
             }
 
-            PopulatePatients();
+            PopulateNote();
 
             return Page();
         }
 
-        private void PopulatePatients()
+        private void PopulateNote()
         {
-            int userId = HttpContext.Session.GetInt32(SessionVariables.SessionKeyUserId) ?? 0;
-            Models.Patient patient = _selfcareContext.Patients.Where(x => x.UserId == userId).FirstOrDefault();
-            Notes = _selfcareContext.Notes.Where(u => u.PatientId == patient.PatientId).ToList();
+            int userId = HttpContext.Session.GetInt32(SessionVariables.SessionKeyUserId) ?? 0; //Get the userid from the session
+            Models.Patient patient = _selfcareContext.Patients.Where(x => x.UserId == userId).FirstOrDefault(); //Get the patient from the userId
+            Notes = _selfcareContext.Notes.Where(u => u.PatientId == patient.PatientId).ToList(); //Get the notes that belong to the patient
         }
 
     }

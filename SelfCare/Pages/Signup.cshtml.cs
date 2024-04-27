@@ -11,10 +11,12 @@ namespace SelfCare.Pages
     public class SignupModel : PageModel
     {
         [Required]
+        [EmailAddress(ErrorMessage = "Must be a valid email")]
         public string Email { get; set; }
         [Required]
         public string Username { get; set; }
         [Required]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$", ErrorMessage = "Password must contain at least one lowercase letter, one uppercase letter, and one integer.")]
         public string Password { get; set; }
         [Required]
         public string ConfirmPassword { get; set; }
@@ -39,13 +41,20 @@ namespace SelfCare.Pages
 
         }
 
-        public IActionResult OnPostSignup([FromForm] string radialValue) 
+        public IActionResult OnPostSignup([FromForm] string radialValue)
         {
             if (ModelState.IsValid)
             {
-                if (ConfirmPassword != Password) 
+                if (ConfirmPassword != Password)
                 {
                     ViewData["Response"] = "Passwords must match.";
+                    return Page();
+                }
+
+                User user = _selfcareContext.Users.Where(u => u.Username == Username || u.Email == Email).FirstOrDefault();
+                if (user != null)
+                {
+                    ViewData["Response"] = "Account already exists with that email/username.";
                     return Page();
                 }
 
@@ -66,6 +75,7 @@ namespace SelfCare.Pages
                         newPractitioner.ProductId = productkey.ProductId;
                         newPractitioner.FirstName = FirstName;
                         newPractitioner.LastName = LastName;
+                        newPractitioner.UserId = 1;
 
                         try
                         {
@@ -79,7 +89,7 @@ namespace SelfCare.Pages
                             return Page();
                         }
 
-                        Models.Practitioner finishedPractitioner = _selfcareContext.Practitioners.Where(u => u.PractitionerId == productkey.ProductId).FirstOrDefault();
+                        Models.Practitioner finishedPractitioner = _selfcareContext.Practitioners.Where(u => u.ProductId == productkey.ProductId).FirstOrDefault();
 
                         if (finishedPractitioner != null)
                         {
@@ -117,13 +127,14 @@ namespace SelfCare.Pages
                                 ViewData["Message"] = "An error has occured";
                                 return Page();
                             }
-                            RedirectToPage("/login");
+                            return RedirectToPage("/login");
                         }
                         ViewData["Response"] = "An error occured";
                         return Page();
                     }
 
                     ViewData["Response"] = $"Product code: {ProductCode} does not match with any account or has already been claimed.";
+                    return Page();
                 }
 
                 if (radialValue == "patient")
@@ -137,13 +148,13 @@ namespace SelfCare.Pages
 
                     Models.Patient patient = _selfcareContext.Patients.Where(u => u.DateOfBirth == DateOfBirth && u.PostCode == Postcode && u.FirstName == FirstName && u.LastName == LastName).FirstOrDefault();
 
-                    if (patient == null) 
+                    if (patient == null)
                     {
                         ViewData["Response"] = "Could not find matching credentials stored. Message your practitioner for more information.";
                         return Page();
                     }
 
-                    if (PractitionerCode != patient.PractitionerKey) 
+                    if (PractitionerCode != patient.PractitionerKey)
                     {
                         ViewData["Response"] = "The Account found practitioner code does not match";
                         return Page();
@@ -196,7 +207,7 @@ namespace SelfCare.Pages
                         return Page();
                     }
 
-                    ViewData["Response"] = "An error occured.";
+                    ViewData["Response"] = "An error occured. Code might be claimed";
                 }
             }
 
